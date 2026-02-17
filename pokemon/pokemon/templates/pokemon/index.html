@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  {{title}}
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-3 mb-3">
+    <h1>{{title}}</h1>
+    <hr>
+    <div class="row">
+      <div class="col-md-6">
+        <a href="#" class="btn btn-outline-secondary">
+          <i class="bi bi-file-earmark-plus"></i>
+          New Pokedex
+        </a>
+      </div>
+      <div class="col-md-6"></div>
+    </div>
+    <table class="table table-hover mt-3">
+      <thead>
+        <th>#</th>
+        <th>Pokemon Name</th>
+        <th>Created At</th>
+      </thead>
+      <tbody>
+        {% for poke in pokemons %}
+          <tr>
+            <td>{{loop.index}}</td>
+            <td>{{poke.name}}</td>
+            <td>{{poke.created_at}}</td>
+          </tr>
+        {% endfor %}
+        
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
