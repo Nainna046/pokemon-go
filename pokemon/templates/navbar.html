@@ -1,13 +1,15 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
   <div class="container-fluid">
 
-    {% if current_user.is_authenticated %}
-      <a class="navbar-brand" href="#">Pokemon Go</a>
-    {% else %}
-      <a class="navbar-brand" href="#">Pokemon Go</a>
-    {% endif %}
+    <!-- Brand -->
+    <a class="navbar-brand fw-bold" href="{{ url_for('users.users') }}">
+      Pokemon Go
+    </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+    <!-- Mobile toggle -->
+    <button class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
             data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown"
             aria-expanded="false"
@@ -18,69 +20,98 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
 
       {% if current_user.is_authenticated %}
-        <!-- เมนูซ้าย -->
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">Pokedex</a>
-          </li>
-        </ul>
+      <!-- LEFT MENU -->
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link {% if request.endpoint == 'users.users' %}active{% endif %}"
+             href="{{ url_for('users.users') }}">
+            Home
+          </a>
+        </li>
+        <li class="nav-item">
+  <a class="nav-link {% if request.endpoint=='pokemon.index' %}active{% endif %}"
+     href="{{ url_for('pokemon.index') }}">
+    Pokedex
+  </a>
+</li>
+      </ul>
       {% endif %}
 
-      <!-- เมนูขวา (สำคัญ: ms-auto) -->
+      <!-- RIGHT MENU -->
       <ul class="navbar-nav ms-auto">
+
         {% if current_user.is_authenticated %}
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle"
-               role="button"
-               data-bs-toggle="dropdown"
-               aria-expanded="false">
-              <img src="{{ url_for('static', filename='img/' + current_user.avatar) }}"
-                   alt=""
-                   width="25"
-                   height="25"
-                   class="rounded-circle">
-              Welcome, {{ current_user.username }}
-            </a>
+        <!-- USER DROPDOWN -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center gap-2"
+             role="button"
+             data-bs-toggle="dropdown"
+             aria-expanded="false">
 
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li>
-                <a class="dropdown-item" href="#">
-                  <i class="bi bi-person-square"></i>
-                  Profile
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">
-                  <i class="bi bi-input-cursor-text"></i>
-                  Change Password
-                </a>
-              </li>
-              <li><hr class="dropdown-divider"></li>
-              <li>
-                <a class="dropdown-item" href="#">
-                  <i class="bi bi-box-arrow-left"></i>
-                  Logout
-                </a>
-              </li>
-            </ul>
-          </li>
+            <!-- ✅ CLEAN avatar fallback (Flask way) -->
+            <img
+              src="{{ url_for('static', filename='img/' + (current_user.avatar or 'avatar.png')) }}"
+              width="28"
+              height="28"
+              class="rounded-circle border"
+              alt="avatar">
+
+            <span class="fw-semibold">
+              Welcome, {{ current_user.username }}
+            </span>
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end shadow">
+
+            <li>
+              <a class="dropdown-item"
+                 href="{{ url_for('users.profile') }}">
+                <i class="bi bi-person-square me-2"></i>
+                Profile
+              </a>
+            </li>
+
+            <li>
+              <a class="dropdown-item" href="#">
+                <i class="bi bi-input-cursor-text me-2"></i>
+                Change Password
+              </a>
+            </li>
+
+            <li><hr class="dropdown-divider"></li>
+
+            <li>
+              <a class="dropdown-item text-danger"
+                 href="{{ url_for('users.logout') }}">
+                <i class="bi bi-box-arrow-left me-2"></i>
+                Logout
+              </a>
+            </li>
+
+          </ul>
+        </li>
 
         {% else %}
 
-          <li class="nav-item">
-            <a class="nav-link" href="#">Register</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Login</a>
-          </li>
+        <!-- GUEST MENU -->
+        <li class="nav-item">
+          <a class="nav-link"
+             href="{{ url_for('users.register') }}">
+            Register
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"
+             href="{{ url_for('users.login') }}">
+            Login
+          </a>
+        </li>
 
         {% endif %}
-      </ul>
 
+      </ul>
     </div>
   </div>
 </nav>

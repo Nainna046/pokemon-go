@@ -5,15 +5,20 @@ from flask import Flask, app
 from pokemon.extensions import db, login_manager, bcrypt
 import pokemon.models as models
 from pokemon.core.routes import core as core_bp
+from pokemon.users.routes import users_bp
+from pokemon.pokemon.routes import pokemon_bp
 
 def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
     db.init_app(app)
     login_manager.init_app(app)
     bcrypt.init_app(app)
 
+    app.register_blueprint(pokemon_bp, url_prefix='/')
     app.register_blueprint(core_bp, url_prefix='/')
+    app.register_blueprint(users_bp, url_prefix='/users')
     
     return app

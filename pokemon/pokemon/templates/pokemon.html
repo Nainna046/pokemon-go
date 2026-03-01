@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+
+  <h1>{{ title }}</h1>
+  <hr>
+
+  <a href="{{ url_for('pokemon.create_pokemon') }}"
+     class="btn btn-outline-success mb-3">
+    <i class="bi bi-plus-square"></i>
+    New Pokedex
+  </a>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Pokemon Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in pokemons %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ p.name }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

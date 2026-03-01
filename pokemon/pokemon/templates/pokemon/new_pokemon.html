@@ -24,6 +24,14 @@
             <input name="weight" type="text" class="form-control" id="weight" required>
           </div>
           <div class="mb-3">
+  <label class="form-label">Pokemon Type</label>
+  <select name="types" class="form-select" multiple size="6" required>
+    {% for t in types %}
+      <option value="{{ t.id }}">{{ t.name }}</option>
+    {% endfor %}
+  </select>
+</div>
+          <div class="mb-3">
             <label for="height" class="form-label">Pokemon Height</label>
             <input name="height" type="text" class="form-control" id="height" required>
           </div>
