@@ -10,37 +10,58 @@
   <hr>
 
   <div class="card mt-3 mb-3">
-    <div class="card-header">
-      <h3>Profile Information</h3>
-    </div>
-    
-<a href="{{ url_for('users.change_password') }}" class="btn btn-warning">
-    Change Password
-</a>
-    <div class="card-body">
-      <form class="row g-3" method="post">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h3 class="mb-0">Profile Information</h3>
 
+      <!-- 🔥 Change Password -->
+      <a href="{{ url_for('users.change_password') }}" class="btn btn-warning">
+        Change Password
+      </a>
+    </div>
+
+    <div class="card-body">
+      <!-- ✅ IMPORTANT: method must be POST -->
+      <form class="row g-3" method="POST">
+
+        <!-- Username (readonly) -->
         <div class="col-md-6">
           <label class="form-label">Username</label>
-          <input disabled value="{{ current_user.username }}" type="text" class="form-control">
+          <input
+            readonly
+            value="{{ current_user.username }}"
+            type="text"
+            class="form-control">
         </div>
 
+        <!-- Email (readonly — ไม่ให้แก้) -->
         <div class="col-md-6">
           <label class="form-label">Email Address</label>
-          <input disabled value="{{ current_user.email }}" type="email" class="form-control">
+          <input
+            readonly
+            value="{{ current_user.email }}"
+            type="email"
+            class="form-control">
         </div>
 
+        <!-- Firstname -->
         <div class="col-md-6">
           <label class="form-label">Firstname</label>
-          <input name="firstname" value="{{ current_user.firstname or '' }}" type="text" class="form-control">
+          <input
+            name="firstname"
+            value="{{ current_user.firstname or '' }}"
+            type="text"
+            class="form-control">
         </div>
 
+        <!-- Lastname -->
         <div class="col-md-6">
           <label class="form-label">Lastname</label>
-          <input name="lastname" value="{{ current_user.lastname or '' }}" type="text" class="form-control">
+          <input
+            name="lastname"
+            value="{{ current_user.lastname or '' }}"
+            type="text"
+            class="form-control">
         </div>
-
-        <hr>
 
         <div class="col-12">
           <button type="submit" class="btn btn-outline-secondary">

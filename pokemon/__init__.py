@@ -10,8 +10,17 @@ from pokemon.pokemon.routes import pokemon_bp
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+
+    # ✅ ใช้ของ Render ถ้ามี ไม่งั้นใช้ sqlite local
+    database_url = None
+
+    if database_url:
+        app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+    else:
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
     login_manager.init_app(app)
@@ -20,5 +29,5 @@ def create_app():
     app.register_blueprint(pokemon_bp, url_prefix='/')
     app.register_blueprint(core_bp, url_prefix='/')
     app.register_blueprint(users_bp, url_prefix='/users')
-    
+
     return app

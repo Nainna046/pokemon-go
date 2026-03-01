@@ -101,9 +101,17 @@ def logout():
 
 
 # ================= PROFILE =================
-@users_bp.route('/profile')
+@users_bp.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
+    if request.method == 'POST':
+        current_user.firstname = request.form.get('firstname')
+        current_user.lastname = request.form.get('lastname')
+
+        db.session.commit()
+        flash('Profile updated successfully!', 'success')
+        return redirect(url_for('users.profile'))
+
     return render_template('users/profile.html', title='Profile Page')
 
 
