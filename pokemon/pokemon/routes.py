@@ -64,7 +64,7 @@ def create_pokemon():
         return redirect(url_for('pokemon.index'))
 
     return render_template(
-        'pokemon_form.html',
-        title='New Pokemon',
-        types=types   # ✅ สำคัญ!!!
-    )
+    'pokemon/new_pokemon.html',
+    title='New Pokemon',
+    types=types
+)   # ✅ สำคัญ!!!
